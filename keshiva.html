@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For Keshiva ❤️</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+#text{
+  font-size:2.5rem;
+  color:white;
+  padding:20px;
+  transition:.3s;
+}
+
+#meterBox{
+  width:260px;
+  height:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.3);
+  overflow:hidden;
+}
+
+#meter{
+  height:100%;
+  width:0%;
+  background:white;
+  transition:.4s;
+}
+
+#clicks{
+  color:white;
+  margin-top:10px;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+  background:white;
+  color:#ff4d6d;
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+.heart{
+  position:absolute;
+  font-size:24px;
+  animation: float 1s ease-out forwards;
+}
+
+@keyframes float{
+  to{
+    transform: translateY(-120px);
+    opacity:0;
+  }
+}
+
+textarea{
+  width:260px;
+  height:100px;
+  border-radius:15px;
+  padding:10px;
+  border:none;
+  resize:none;
+}
+</style>
+</head>
+
+<body onclick="love(event)">
+
+<div id="text">Click anywhere Keshiva ❤️</div>
+
+<div id="meterBox">
+<div id="meter"></div>
+</div>
+
+<div id="clicks">Love Meter: 0%</div>
+
+<button id="forgiveBtn" onclick="acceptApology()" style="display:none">
+I forgive you ❤️
+</button>
+
+<div id="responseBox" style="display:none">
+<br>
+<textarea id="herText" placeholder="Tell me whatever you feel..."></textarea>
+<br>
+<button onclick="submitResponse(true)">Yes, I want us back ❤️</button>
+<button onclick="submitResponse(false)">No, I don't 💔</button>
+</div>
+
+<script>
+
+const messages=[
+"Sorry Keshiva 🥺",
+"I Love You Keshiva ❤️",
+"You Mean Everything To Me 💞",
+"Please Forgive Me 😔",
+"Keshiva You're My World 🌎",
+"I Miss You 💔",
+"Forever Yours ♾️"
+];
+
+let count=0;
+
+// click love function
+function love(event){
+
+count++;
+
+let text=document.getElementById("text");
+let meter=document.getElementById("meter");
+let clicks=document.getElementById("clicks");
+let btn=document.getElementById("forgiveBtn");
+
+// random message
+text.innerHTML=messages[Math.floor(Math.random()*messages.length)];
+
+// meter logic
+let percent=Math.min(count*5,100);
+meter.style.width=percent+"%";
+clicks.innerHTML="Love Meter: "+percent+"%";
+
+// show forgive button
+if(percent>=70){
+btn.style.display="inline-block";
+}
+
+// floating heart
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=event.clientX+"px";
+heart.style.top=event.clientY+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1000);
+}
+
+// forgiveness
+function acceptApology(){
+
+if(localStorage.getItem("forgiven")){
+alert("Already forgiven once ❤️");
+return;
+}
+
+localStorage.setItem("forgiven",true);
+
+document.getElementById("text").innerHTML=
+"Keshiva ❤️<br>You can tell me how you feel…";
+
+document.getElementById("responseBox").style.display="block";
+document.getElementById("forgiveBtn").style.display="none";
+}
+
+// response
+function submitResponse(choice){
+
+if(localStorage.getItem("responseSaved")){
+alert("Response already submitted ❤️");
+return;
+}
+
+let message=document.getElementById("herText").value;
+
+if(message.trim()===""){
+alert("Please write something first 🥺");
+return;
+}
+
+localStorage.setItem("responseSaved",true);
+localStorage.setItem("herMessage",message);
+localStorage.setItem("herChoice",choice);
+
+if(choice){
+document.body.innerHTML=
+"<h1 style='color:white;margin-top:20%'>She chose love ❤️<br>This is a new beginning ✨</h1>";
+}else{
+document.body.innerHTML=
+"<h1 style='color:white;margin-top:20%'>Thank you for being honest 💔<br>I’ll respect your feelings always.</h1>";
+}
+}
+
+</script>
+</body>
+</html>
+
+
